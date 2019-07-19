@@ -6,7 +6,6 @@ namespace Vdlp\Csrf;
 
 use Cms\Classes\CmsController;
 use System\Classes\PluginBase;
-use Vdlp\Csrf\Http\Middleware\VerifyCsrfTokenMiddleware;
 
 /**
  * Class Plugin

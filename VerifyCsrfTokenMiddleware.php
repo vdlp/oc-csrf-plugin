@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vdlp\Csrf\Http\Middleware;
+namespace Vdlp\Csrf;
 
 use Closure;
 use Illuminate\Contracts\Encryption\Encrypter;
@@ -17,9 +17,9 @@ use RuntimeException;
 /**
  * Class VerifyCsrfTokenMiddleware
  *
- * @package Vdlp\Csrf\Http\Middleware
+ * @package Vdlp\Csrf
  */
-final class VerifyCsrfTokenMiddleware
+class VerifyCsrfTokenMiddleware
 {
     /**
      * @var Encrypter
