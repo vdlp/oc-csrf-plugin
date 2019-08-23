@@ -37,6 +37,14 @@ class VerifyCsrfTokenMiddleware
     private $responseFactory;
 
     /**
+     * The URIs that should be excluded from CSRF verification.
+     * as used by https://github.com/laravel/framework/blob/5.4/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php
+     * example use $except = ["stripe/webhooks", "gocardless/webhooks"];
+     * @var array
+     */
+    protected $except = [];
+
+    /**
      * @param Encrypter $encrypter
      * @param Redirector $redirector
      * @param ResponseFactory $responseFactory
@@ -56,7 +64,7 @@ class VerifyCsrfTokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($this->isReading($request) || $this->tokensMatch($request)) {
+        if ($this->isReading($request) || $this->tokensMatch($request) || $this->inExceptArray($request)) {
             return $next($request);
         }
 
@@ -76,6 +84,25 @@ class VerifyCsrfTokenMiddleware
     private function isReading($request): bool
     {
         return in_array($request->method(), ['HEAD', 'GET', 'OPTIONS']);
+    }
+
+    /**
+     * Check the list of exluded URLs to see if we should ignore CSRF for this request
+     * as used by https://github.com/laravel/framework/blob/5.4/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php
+     * @param Request $request
+     * @return bool
+     */
+    private function inExceptArray(Request $request)
+    {
+        foreach ($this->except as $except) {
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
+            if ($request->is($except)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
