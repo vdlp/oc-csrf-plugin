@@ -37,20 +37,26 @@ final class VerifyCsrfTokenMiddleware
     private $responseFactory;
 
     /**
-     * @var array|null
+     * @var array
      */
-    private static $excludePaths;
+    private $excludePaths;
 
     /**
      * @param Encrypter $encrypter
      * @param Redirector $redirector
      * @param ResponseFactory $responseFactory
+     * @param array $excludePaths
      */
-    public function __construct(Encrypter $encrypter, Redirector $redirector, ResponseFactory $responseFactory)
-    {
+    public function __construct(
+        Encrypter $encrypter,
+        Redirector $redirector,
+        ResponseFactory $responseFactory,
+        array $excludePaths = []
+    ) {
         $this->encrypter = $encrypter;
         $this->redirector = $redirector;
         $this->responseFactory = $responseFactory;
+        $this->excludePaths = $excludePaths;
     }
 
     /**
@@ -103,13 +109,7 @@ final class VerifyCsrfTokenMiddleware
      */
     private function excludePathMatch(Request $request): bool
     {
-        if (self::$excludePaths === null) {
-            self::$excludePaths = array_map(static function (string $path): string {
-                return ltrim($path, '/');
-            }, config('csrf.exclude_paths', []));
-        }
-
-        return in_array($request->path(), self::$excludePaths, true);
+        return in_array($request->path(), $this->excludePaths, true);
     }
 
     /**

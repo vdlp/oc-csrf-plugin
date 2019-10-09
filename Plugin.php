@@ -33,7 +33,6 @@ class Plugin extends PluginBase
         ];
     }
 
-
     /**
      * {@inheritDoc}
      */
