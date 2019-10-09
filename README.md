@@ -26,6 +26,12 @@ Go to Settings > Updates & Plugins > Install plugins and search for 'CSRF'.
 
 ## Configuration
 
+Add the plugin configuration to your projects' config folder:
+
+```
+php artisan vendor:publish --provider="Vdlp\Csrf\ServiceProviders\CsrfServiceProvider" --tag="config"
+```
+
 Add the CSRF token to the head:
 
 ```
