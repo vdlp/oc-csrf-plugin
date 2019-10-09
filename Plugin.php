@@ -1,11 +1,16 @@
 <?php
 
+/** @noinspection SpellCheckingInspection */
+/** @noinspection PhpMissingParentCallCommonInspection */
+
 declare(strict_types=1);
 
 namespace Vdlp\Csrf;
 
 use Cms\Classes\CmsController;
 use System\Classes\PluginBase;
+use Vdlp\Csrf\Middleware;
+use Vdlp\Csrf\ServiceProviders;
 
 /**
  * Class Plugin
@@ -15,7 +20,7 @@ use System\Classes\PluginBase;
 class Plugin extends PluginBase
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function pluginDetails(): array
     {
@@ -28,19 +33,26 @@ class Plugin extends PluginBase
         ];
     }
 
-
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function boot(): void
     {
         CmsController::extend(static function (CmsController $controller) {
-            $controller->middleware(VerifyCsrfTokenMiddleware::class);
+            $controller->middleware(Middleware\VerifyCsrfTokenMiddleware::class);
         });
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     */
+    public function register(): void
+    {
+        $this->app->register(ServiceProviders\CsrfServiceProvider::class);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function registerMarkupTags(): array
     {
