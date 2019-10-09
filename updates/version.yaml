@@ -1,0 +1,2 @@
+1.0.0: "First version of Vdlp.Csrf -- See: https://github.com/vdlp/oc-csrf-plugin/releases/tag/1.0.0"
+1.1.0: "Added configuration to exclude paths from CSRF validation -- See: https://github.com/vdlp/oc-csrf-plugin/releases/tag/1.1.0"
