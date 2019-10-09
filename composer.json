@@ -1,6 +1,6 @@
 {
     "name": "vdlp/oc-csrf-plugin",
-    "description": "Adds CSRF protection to OctoberCMS frontend.",
+    "description": "Adds CSRF protection to October CMS frontend.",
     "type": "october-plugin",
     "license": "GPL-2.0",
     "authors": [

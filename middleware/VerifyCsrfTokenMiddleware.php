@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vdlp\Csrf;
+namespace Vdlp\Csrf\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Encryption\Encrypter;
@@ -17,9 +17,9 @@ use RuntimeException;
 /**
  * Class VerifyCsrfTokenMiddleware
  *
- * @package Vdlp\Csrf
+ * @package Vdlp\Csrf\Middleware
  */
-class VerifyCsrfTokenMiddleware
+final class VerifyCsrfTokenMiddleware
 {
     /**
      * @var Encrypter
@@ -35,6 +35,11 @@ class VerifyCsrfTokenMiddleware
      * @var ResponseFactory
      */
     private $responseFactory;
+
+    /**
+     * @var array|null
+     */
+    private static $excludePaths;
 
     /**
      * @param Encrypter $encrypter
@@ -56,7 +61,7 @@ class VerifyCsrfTokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($this->isReading($request) || $this->tokensMatch($request)) {
+        if ($this->isReading($request) || $this->excludePathMatch($request) || $this->tokensMatch($request)) {
             return $next($request);
         }
 
@@ -83,7 +88,7 @@ class VerifyCsrfTokenMiddleware
      * @return bool
      * @throws RuntimeException
      */
-    private function tokensMatch($request): bool
+    private function tokensMatch(Request $request): bool
     {
         $token = $this->getTokenFromRequest($request);
 
@@ -94,11 +99,27 @@ class VerifyCsrfTokenMiddleware
 
     /**
      * @param Request $request
+     * @return bool
+     */
+    private function excludePathMatch(Request $request): bool
+    {
+        if (self::$excludePaths === null) {
+            self::$excludePaths = array_map(static function (string $path): string {
+                return ltrim($path, '/');
+            }, config('csrf.exclude_paths', []));
+        }
+
+        return in_array($request->path(), self::$excludePaths, true);
+    }
+
+    /**
+     * @param Request $request
      * @return string
      */
-    private function getTokenFromRequest($request): string
+    private function getTokenFromRequest(Request $request): string
     {
         $token = $request->input('_token') ?: $request->header('X-CSRF-TOKEN');
+
         if (!$token && $header = $request->header('X-XSRF-TOKEN')) {
             $token = $this->encrypter->decrypt($header, EncryptCookies::serialized('XSRF-TOKEN'));
         }
