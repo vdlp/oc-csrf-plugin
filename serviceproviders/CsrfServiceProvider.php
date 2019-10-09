@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vdlp\Csrf\ServiceProviders;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Redirector;
@@ -32,17 +33,20 @@ final class CsrfServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(VerifyCsrfTokenMiddleware::class, static function (): VerifyCsrfTokenMiddleware {
-            $excludePaths = array_map(static function (string $path): string {
-                return ltrim($path, '/');
-            }, config('csrf.exclude_paths', []));
+        $this->app->bind(
+            VerifyCsrfTokenMiddleware::class,
+            static function (Container $container): VerifyCsrfTokenMiddleware {
+                $excludePaths = array_map(static function (string $path): string {
+                    return ltrim($path, '/');
+                }, config('csrf.exclude_paths', []));
 
-            return new VerifyCsrfTokenMiddleware(
-                resolve(Encrypter::class),
-                resolve(Redirector::class),
-                resolve(ResponseFactory::class),
-                $excludePaths
-            );
-        });
+                return new VerifyCsrfTokenMiddleware(
+                    $container->make(Encrypter::class),
+                    $container->make(Redirector::class),
+                    $container->make(ResponseFactory::class),
+                    $excludePaths
+                );
+            }
+        );
     }
 }
