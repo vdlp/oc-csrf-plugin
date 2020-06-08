@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use October\Rain\Cookie\Middleware\EncryptCookies;
 use RuntimeException;
+use Throwable;
 
 /**
  * Class VerifyCsrfTokenMiddleware
@@ -124,6 +125,10 @@ final class VerifyCsrfTokenMiddleware
             $token = $this->encrypter->decrypt($header, EncryptCookies::serialized('XSRF-TOKEN'));
         }
 
-        return (string) $token;
+        try {
+            return (string) $token;
+        } catch (Throwable $e) {
+            return '';
+        }
     }
 }
