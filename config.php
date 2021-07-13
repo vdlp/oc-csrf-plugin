@@ -14,7 +14,7 @@ return [
     */
 
     'exclude_paths' => [
-        // i.e. '/path/to/exclude'
+        // Example: '/path/to/exclude'
     ],
 
 ];

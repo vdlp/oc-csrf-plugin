@@ -2,25 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Vdlp\Csrf\ServiceProviders;
+namespace Vdlp\Csrf;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Redirector;
-use October\Rain\Support\ServiceProvider;
+use October\Rain\Support\ServiceProvider as ServiceProviderBase;
 use Vdlp\Csrf\Middleware\VerifyCsrfTokenMiddleware;
 
-/**
- * Class CsrfServiceProvider
- *
- * @package Vdlp\Csrf\ServiceProviders
- */
-final class CsrfServiceProvider extends ServiceProvider
+final class ServiceProvider extends ServiceProviderBase
 {
-    /**
-     * @return void
-     */
     public function boot(): void
     {
         $this->publishes([
@@ -28,9 +20,6 @@ final class CsrfServiceProvider extends ServiceProvider
         ], 'config');
     }
 
-    /**
-     * @return void
-     */
     public function register(): void
     {
         $this->app->bind(
