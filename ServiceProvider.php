@@ -16,7 +16,7 @@ final class ServiceProvider extends ServiceProviderBase
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config.php' => config_path('csrf.php'),
+            __DIR__ . '/config.php' => config_path('csrf.php'),
         ], 'config');
     }
 
