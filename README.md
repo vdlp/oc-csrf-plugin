@@ -17,7 +17,7 @@ composer require vdlp/oc-csrf-plugin
 Add the plugin configuration to your config folder:
 
 ```
-php artisan vendor:publish --provider="Vdlp\Csrf\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Vdlp\Csrf\ServiceProviders\CsrfServiceProvider" --tag="vdlp-csrf-config"
 ```
 
 Add the CSRF token to the `<head>` section:

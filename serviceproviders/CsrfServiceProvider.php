@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vdlp\Csrf;
+namespace Vdlp\Csrf\ServiceProviders;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Encryption\Encrypter;
@@ -11,13 +11,15 @@ use Illuminate\Routing\Redirector;
 use October\Rain\Support\ServiceProvider as ServiceProviderBase;
 use Vdlp\Csrf\Middleware\VerifyCsrfTokenMiddleware;
 
-final class ServiceProvider extends ServiceProviderBase
+final class CsrfServiceProvider extends ServiceProviderBase
 {
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('csrf.php'),
-        ], 'config');
+            __DIR__ . '/../config.php' => config_path('csrf.php'),
+        ], 'vdlp-csrf-config');
+
+        $this->mergeConfigFrom(__DIR__ . '/../config.php', 'csrf');
     }
 
     public function register(): void
