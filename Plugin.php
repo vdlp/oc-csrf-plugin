@@ -7,6 +7,7 @@ namespace Vdlp\Csrf;
 use Cms\Classes\CmsController;
 use System\Classes\PluginBase;
 use Vdlp\Csrf\Middleware\VerifyCsrfTokenMiddleware;
+use Vdlp\Csrf\ServiceProviders\CsrfServiceProvider;
 
 final class Plugin extends PluginBase
 {
@@ -30,7 +31,7 @@ final class Plugin extends PluginBase
 
     public function register(): void
     {
-        $this->app->register(ServiceProvider::class);
+        $this->app->register(CsrfServiceProvider::class);
     }
 
     public function registerMarkupTags(): array
