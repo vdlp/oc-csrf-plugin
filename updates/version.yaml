@@ -5,3 +5,4 @@
 2.0.0: "Support for PHP 7.4 or higher"
 2.0.1: "Fix location of plugin config.php file"
 2.0.2: "Minor improvements -- See: CHANGELOG.md"
+2.0.3: "Fixes type error when using `csrf_token()` Twig function"
