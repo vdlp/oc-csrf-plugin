@@ -6,6 +6,7 @@ namespace Vdlp\Csrf;
 
 use Cms\Classes\CmsController;
 use System\Classes\PluginBase;
+use Throwable;
 use Vdlp\Csrf\Middleware\VerifyCsrfTokenMiddleware;
 use Vdlp\Csrf\ServiceProviders\CsrfServiceProvider;
 
@@ -38,8 +39,12 @@ final class Plugin extends PluginBase
     {
         return [
             'functions' => [
-                'csrf_token' => static function (): string {
-                    return csrf_token();
+                'csrf_token' => static function (): ?string {
+                    try {
+                        return csrf_token();
+                    } catch (Throwable $exception) {
+                        return null;
+                    }
                 },
             ],
         ];

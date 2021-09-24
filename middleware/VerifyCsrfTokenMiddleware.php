@@ -8,6 +8,8 @@ use Closure;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use October\Rain\Cookie\Middleware\EncryptCookies;
@@ -34,7 +36,7 @@ final class VerifyCsrfTokenMiddleware
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|mixed
+     * @return JsonResponse|RedirectResponse|mixed
      * @throws RuntimeException
      */
     public function handle(Request $request, Closure $next)
