@@ -18,21 +18,12 @@ use Throwable;
 
 final class VerifyCsrfTokenMiddleware
 {
-    private Encrypter $encrypter;
-    private Redirector $redirector;
-    private ResponseFactory $responseFactory;
-    private array $excludePaths;
-
     public function __construct(
-        Encrypter $encrypter,
-        Redirector $redirector,
-        ResponseFactory $responseFactory,
-        array $excludePaths = []
+        private Encrypter $encrypter,
+        private Redirector $redirector,
+        private ResponseFactory $responseFactory,
+        private array $excludePaths = []
     ) {
-        $this->encrypter = $encrypter;
-        $this->redirector = $redirector;
-        $this->responseFactory = $responseFactory;
-        $this->excludePaths = $excludePaths;
     }
 
     /**
@@ -92,7 +83,7 @@ final class VerifyCsrfTokenMiddleware
 
         try {
             return (string) $token;
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return '';
         }
     }

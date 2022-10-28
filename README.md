@@ -4,8 +4,8 @@ Adds CSRF protection.
 
 ## Requirements
 
-* PHP 7.4 or higher
-* October CMS 1.0 or higher
+* PHP 8.0.2 or higher
+* October CMS 2.0 or higher
 
 ## Installation
 
