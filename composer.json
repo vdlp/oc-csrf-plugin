@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0.2",
         "composer/installers": "^1.0 || ^2.0",
-        "october/system": "^1.0 || ^2.0"
+        "october/system": "^2.0 || ^3.0"
     }
 }
