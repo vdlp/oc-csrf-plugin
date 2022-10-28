@@ -13,5 +13,18 @@
         "php": "^8.0.2",
         "composer/installers": "^1.0 || ^2.0",
         "october/system": "^2.0 || ^3.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://gateway.octobercms.com"
+        }
+    ],
+    "archive": {
+        "exclude": [
+            ".gitattributes",
+            ".github",
+            ".gitignore"
+        ]
     }
 }
