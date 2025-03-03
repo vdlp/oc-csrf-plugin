@@ -7,4 +7,5 @@ return [
         'name' => 'CSRF',
         'description' => 'Adds CSRF protection.',
     ],
+    'notify_user_for_expired_page' => 'The page has expired. Please try again.',
 ];

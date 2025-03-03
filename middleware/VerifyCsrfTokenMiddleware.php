@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Vdlp\Csrf\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use October\Rain\Cookie\Middleware\EncryptCookies;
+use October\Rain\Flash\FlashBag;
 use RuntimeException;
 use Throwable;
 
@@ -22,6 +25,9 @@ final class VerifyCsrfTokenMiddleware
         private Encrypter $encrypter,
         private Redirector $redirector,
         private ResponseFactory $responseFactory,
+        private FlashBag $flashBag,
+        private Translator $translator,
+        private Repository $config,
         private array $excludePaths = []
     ) {
     }
@@ -37,6 +43,10 @@ final class VerifyCsrfTokenMiddleware
         }
 
         if ($request->ajax()) {
+            if ($this->config->get('csrf.notify_user_for_expired_page')) {
+                $this->flashBag->error($this->translator->get('vdlp.csrf::lang.notify_user_for_expired_page'));
+            }
+
             return $this->responseFactory->json([
                 'X_OCTOBER_REDIRECT' => $request->getUri(),
             ]);
