@@ -17,4 +17,10 @@ return [
         // Example: '/path/to/exclude'
     ],
 
+
+    /*
+     * Notify the user that the page has expired with a flash message.
+     */
+
+    'notify_user_for_expired_page' => false,
 ];

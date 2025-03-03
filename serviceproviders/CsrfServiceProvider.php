@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Vdlp\Csrf\ServiceProviders;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Routing\Redirector;
+use October\Rain\Flash\FlashBag;
 use October\Rain\Support\ServiceProvider as ServiceProviderBase;
 use Vdlp\Csrf\Middleware\VerifyCsrfTokenMiddleware;
 
@@ -35,6 +38,9 @@ final class CsrfServiceProvider extends ServiceProviderBase
                     $container->make(Encrypter::class),
                     $container->make(Redirector::class),
                     $container->make(ResponseFactory::class),
+                    $container->make(FlashBag::class),
+                    $container->make(Translator::class),
+                    $container->make(Repository::class),
                     $excludePaths
                 );
             }
