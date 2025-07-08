@@ -14,8 +14,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use October\Rain\Cookie\Middleware\EncryptCookies;
 use October\Rain\Flash\FlashBag;
+use October\Rain\Foundation\Http\Middleware\EncryptCookies;
 use RuntimeException;
 use Throwable;
 
