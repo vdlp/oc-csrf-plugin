@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* Supports October CMS 4.2 or higher.
+* Supports PHP 8.4 or higher.
+
 ## [2.3.0] - 2025-07-08
 
 ### Added
