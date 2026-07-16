@@ -3,6 +3,7 @@
     "description": "Adds CSRF protection to October CMS frontend.",
     "license": "GPL-2.0",
     "type": "october-plugin",
+    "abandoned": true,
     "authors": [
         {
             "name": "Van der Let & Partners",
